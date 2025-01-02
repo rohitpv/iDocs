@@ -7,7 +7,7 @@ const jwt = require("jsonwebtoken");
 const fetchuser = require("../middleware/fetchuser");
 
 // secret which will be used to sign the JWT
-const JWT_SECRET = "lwkjafld4@3kjfaoiweourowj2392i349u";
+const JWT_SECRET = "qwertyuiopasdfghjklzxcvbnm";
 let success = true;
 // ROUTE - 1: create a user using POST: "/api/auth/createuser". No login required
 
