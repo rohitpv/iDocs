@@ -8,6 +8,10 @@ const NoteState = (props) => {
   let alert = useContext(AlertContext);
   let { showAlert } = alert;
   const [notes, setNotes] = useState(notesInitial);
+    // Generate shareable URL
+    const generateShareableURL = (id) => {
+      return `/share/${id}`;
+    };
   //fetch all notes
 
   const getAllNotes = async () => {
@@ -86,7 +90,7 @@ const NoteState = (props) => {
 
   return (
     <NoteContext.Provider
-      value={{ notes, setNotes, addNote, deleteNote, getAllNotes, editNote }}
+      value={{ notes, setNotes, addNote, deleteNote, getAllNotes, editNote, generateShareableURL }}
     >
       {props.children}
     </NoteContext.Provider>

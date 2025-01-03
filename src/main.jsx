@@ -7,6 +7,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./components/Home.jsx";
 import Login from "./components/Login.jsx";
 import Signup from "./components/Signup.jsx";
+import CollaborateNote from "./components/CollaborateNote.jsx";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
       {
         path: "signup/",
         element: <Signup></Signup>,
+      },
+      {
+        path: "share/:id",
+        element: <CollaborateNote></CollaborateNote>,
       },
     ],
   },

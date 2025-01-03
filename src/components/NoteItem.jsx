@@ -1,9 +1,18 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import NoteContext from "../context/notes/NoteContext";
+import { useNavigate } from "react-router-dom";
 
 function NoteItem(props) {
   const { note, updateNote } = props;
-  const { deleteNote } = useContext(NoteContext);
+  const { deleteNote, generateShareableURL, listenForChanges } = useContext(NoteContext);
+  const [shareableURL, setShareableURL] = useState("");
+  let navigate = useNavigate();
+
+  const handleGenerateURL = () => {
+    const url = generateShareableURL(note._id);
+    setShareableURL(url);
+    listenForChanges(note._id);
+  };
   return (
     <div className="col-md-4 my-3">
       <div className="card">
@@ -27,6 +36,26 @@ function NoteItem(props) {
           >
             Delete
           </button>
+          <button
+            className="btn btn-secondary mx-2"
+            onClick={handleGenerateURL}
+          >
+            Generate Shareable URL
+          </button>
+          {shareableURL && (
+            <div>
+              {/* <p>Shareable URL: <a href={shareableURL} target="_blank" rel="noopener noreferrer">{shareableURL}</a></p> */}
+              <button
+                className="btn btn-success mx-2"
+                onClick={() => {
+                  // window.open(shareableURL, "_blank");
+                  navigate(shareableURL);
+                }}
+              >
+                Collaborate
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>
