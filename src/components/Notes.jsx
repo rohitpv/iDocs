@@ -115,6 +115,8 @@ function Notes() {
                   /> */}
                   <RichTextInput
                     value={note.edescription}
+                    id="edescription"
+                    name="edescription"
                     onChange={onChange}
                     minLength={5}
                     required
