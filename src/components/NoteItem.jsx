@@ -11,7 +11,7 @@ function NoteItem(props) {
   const handleGenerateURL = () => {
     const url = generateShareableURL(note._id);
     setShareableURL(url);
-    listenForChanges(note._id);
+    return url;
   };
   return (
     <div className="col-md-4 my-3">
@@ -37,25 +37,15 @@ function NoteItem(props) {
             Delete
           </button>
           <button
-            className="btn btn-secondary mx-2"
-            onClick={handleGenerateURL}
+            className="btn btn-success mx-2"
+            onClick={async () => {
+              const url = await handleGenerateURL();
+              navigate(url);
+            }}
           >
-            Generate Shareable URL
+            Collaborate
           </button>
-          {shareableURL && (
-            <div>
-              {/* <p>Shareable URL: <a href={shareableURL} target="_blank" rel="noopener noreferrer">{shareableURL}</a></p> */}
-              <button
-                className="btn btn-success mx-2"
-                onClick={() => {
-                  // window.open(shareableURL, "_blank");
-                  navigate(shareableURL);
-                }}
-              >
-                Collaborate
-              </button>
-            </div>
-          )}
+          
         </div>
       </div>
     </div>
