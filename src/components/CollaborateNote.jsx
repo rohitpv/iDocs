@@ -22,6 +22,7 @@ function CollaborateNote(id) {
             title: currRETNote.title,
             description: currRETNote.description,
             tags: currRETNote.tags,
+            isShared: true,
         });
     };
     fetchNote();
