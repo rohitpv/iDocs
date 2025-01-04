@@ -1,24 +1,36 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useContext } from "react";
 import { useState } from "react";
 import NoteContext from "../context/notes/NoteContext";
 import RichTextInput from "./RichTextInput";
-function CollaborateNote() {
-  const context = useContext(NoteContext);
-  let { addNote } = context;
+function CollaborateNote(id) {
   const [note, setNote] = useState({
     title: "",
     description: "",
     tags: "General",
   });
+  const context = useContext(NoteContext);
+  let { currNote, getNote, editNote } = context;
+  console.log("in collaboratenote jsx id=", id);
+  useEffect(() => {
+    const fetchNote = async () => {
+        let currRETNote = await getNote(id);
+        console.log("in collaboratenote jsx currNote=", currNote);
+        console.log("in collaboratenote jsx currRETNote=", currRETNote);
+
+        setNote({
+            title: currRETNote.title,
+            description: currRETNote.description,
+            tags: currRETNote.tags,
+        });
+    };
+    fetchNote();
+}, []);
+
   const handleClick = (e) => {
     e.preventDefault();
-    addNote(note.title, note.description, note.tags);
-    setNote({
-      title: "",
-      description: "",
-      tags: "General",
-    });
+    editNote(id.id, note.title, note.description, note.tags);
+    console.log("clicked update note", id.id, note.title, note.description, note.tags);
   };
   const onChange = (e) => {
     setNote({ ...note, [e.target.name]: e.target.value });
@@ -180,7 +192,7 @@ function CollaborateNote() {
             onClick={handleClick}
             disabled={note.title.length < 5 || note.description.length < 5}
           >
-            Add Note
+            Update Note
           </button>
         </form>
       </div>

@@ -8,6 +8,8 @@ import Home from "./components/Home.jsx";
 import Login from "./components/Login.jsx";
 import Signup from "./components/Signup.jsx";
 import CollaborateNote from "./components/CollaborateNote.jsx";
+import { useParams } from "react-router-dom";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -31,11 +33,16 @@ const router = createBrowserRouter([
       },
       {
         path: "share/:id",
-        element: <CollaborateNote></CollaborateNote>,
+        element: <CollaborateNoteWrapper></CollaborateNoteWrapper>,
       },
     ],
   },
 ]);
+
+function CollaborateNoteWrapper() {
+  const { id } = useParams();
+  return <CollaborateNote id={id}></CollaborateNote>;
+}
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>

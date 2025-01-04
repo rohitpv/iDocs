@@ -6,6 +6,24 @@ const { body, validationResult } = require("express-validator");
 
 
 let success = true;
+// ROUTE - 0: get specific note of a user using  GET: /api/notes/fetchnote . login required
+
+router.get("/fetchnote/:noteId", fetchuser, async (req, res) => {
+try {
+
+  const userId = req.user.id;
+  const noteId = req.params.noteId;
+  console.log("called fetchnote with noteId=",noteId);
+  const note = await Notes.findOne({_id:noteId,user:userId});
+  if(!note){
+    return res.status(400).json({message:"Note not found or does not belong to the user"})
+  }
+  res.json(note);
+} catch (error) {
+  console.log(error);
+  return res.status(500).json({message:"internal server error"});
+}
+});
 // ROUTE - 1: get the notes of a user using  GET: /api/notes/fetchallnotes . login required
 
 router.get("/fetchallnotes", fetchuser, async (req, res) => {

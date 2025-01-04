@@ -8,10 +8,36 @@ const NoteState = (props) => {
   let alert = useContext(AlertContext);
   let { showAlert } = alert;
   const [notes, setNotes] = useState(notesInitial);
+  const [currNote, setCurrNote] = useState({});
     // Generate shareable URL
     const generateShareableURL = (id) => {
       return `/share/${id}`;
     };
+
+  //fetch note by id / VIEW NOTE
+
+  const getNote = async (id) => {
+    console.log("in getNote id=",id);
+    console.log("in getNote id.id=",id.id);
+    try {
+      const response = await fetch(`${host}/api/notes/fetchnote/${id.id}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Auth-Token":
+            localStorage.getItem("token"),
+        },
+      });
+      const json = await response.json();
+      console.log("called getNote and got resp from mongo=",json)
+      setCurrNote(json);
+      console.log("setted currNote=",currNote);
+      return json;
+    } catch (error) {
+      console.log("an error has occured in the view a note (getNote) procedure");
+    }
+  };
+
   //fetch all notes
 
   const getAllNotes = async () => {
@@ -30,6 +56,7 @@ const NoteState = (props) => {
       console.log("an error has occured in the fetch all notes procedure");
     }
   };
+
 
   // Add a note
   const addNote = async (title, description, tags) => {
@@ -90,7 +117,7 @@ const NoteState = (props) => {
 
   return (
     <NoteContext.Provider
-      value={{ notes, setNotes, addNote, deleteNote, getAllNotes, editNote, generateShareableURL }}
+      value={{ notes, setNotes, addNote, deleteNote, getAllNotes, editNote, generateShareableURL, getNote, currNote, setCurrNote }}
     >
       {props.children}
     </NoteContext.Provider>
