@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { useState } from "react";
 import NoteContext from "../context/notes/NoteContext";
 import RichTextInput from "./RichTextInput";
-function AddNote() {
+function CollaborateNote() {
   const context = useContext(NoteContext);
   let { addNote } = context;
   const [note, setNote] = useState({
@@ -188,4 +188,4 @@ function AddNote() {
   );
 }
 
-export default AddNote;
+export default CollaborateNote;
