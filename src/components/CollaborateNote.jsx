@@ -13,36 +13,10 @@ function CollaborateNote(id) {
     tags: "General",
   });
 
-  // io.on("connection", (socket) => {
-  //   console.log("a user connected");
-  //   socket.on("disconnect", () => {
-  //     console.log("user disconnected");
-  //   });
-
-  //   socket.on(id.id, (note) => {
-  //     console.log("note changed: " + note);
-  //     io.emit(id.id, note);
-  //   });
-  // });
-
   const context = useContext(NoteContext);
   let { currNote, getNote, editNote } = context;
   console.log("in collaboratenote jsx id=", id);
-//   useEffect(() => {
-//     const fetchNote = async () => {
-//         let currRETNote = await getNote(id);
-//         console.log("in collaboratenote jsx currNote=", currNote);
-//         console.log("in collaboratenote jsx currRETNote=", currRETNote);
 
-//         setNote({
-//             title: currRETNote.title,
-//             description: currRETNote.description,
-//             tags: currRETNote.tags,
-//             isShared: true,
-//         });
-//     };
-//     fetchNote();
-// }, []);
 
   useEffect(() => {
     const fetchNote = async () => {

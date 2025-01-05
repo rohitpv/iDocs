@@ -103,16 +103,7 @@ function Notes() {
                   <label htmlFor="description" className="form-label">
                     Description
                   </label>
-                  {/* <input
-                    type="text"
-                    className="form-control"
-                    id="edescription"
-                    name="edescription"
-                    value={note.edescription}
-                    onChange={onChange}
-                    minLength={5}
-                    required
-                  /> */}
+                  
                   <RichTextInput
                     value={note.edescription}
                     id="edescription"
