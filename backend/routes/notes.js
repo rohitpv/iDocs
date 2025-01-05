@@ -12,14 +12,12 @@ router.get("/fetchnote/:noteId", async (req, res) => {
 try {
 
   const noteId = req.params.noteId;
-  console.log("called fetchnote with noteId=",noteId);
   const note = await Notes.findOne({_id:noteId});
   if(!note){
     return res.status(400).json({message:"Note not found or does not belong to the user"})
   }
   res.json(note);
 } catch (error) {
-  console.log("***in backend",error);
   return res.status(500).json({message:"internal server error"});
 }
 });

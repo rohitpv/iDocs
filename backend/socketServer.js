@@ -23,7 +23,6 @@ io.on("connection", (socket) => {
   });
 
   socket.on("noteChange", (note) => {
-    console.log("note changed: ", note);
     io.emit("noteChange", note);
   });
 });

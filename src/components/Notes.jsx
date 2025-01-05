@@ -42,7 +42,6 @@ function Notes() {
   const handleClick = (e) => {
     e.preventDefault();
     editNote(note.id, note.etitle, note.edescription, note.etags);
-    console.log(note.etitle, note.edescription);
     refClose.current.click();
   };
   return (

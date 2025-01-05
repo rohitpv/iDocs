@@ -17,8 +17,6 @@ const NoteState = (props) => {
   //fetch note by id / VIEW NOTE
 
   const getNote = async (id) => {
-    console.log("in getNote id=",id);
-    console.log("in getNote id.id=",id.id);
     try {
       const response = await fetch(`${host}/api/notes/fetchnote/${id.id}`, {
         method: "GET",
@@ -29,9 +27,7 @@ const NoteState = (props) => {
         },
       });
       const json = await response.json();
-      console.log("called getNote and got resp from mongo=",json)
       setCurrNote(json);
-      console.log("setted currNote=",currNote);
       return json;
     } catch (error) {
       console.log("an error has occured in the view a note (getNote) procedure");

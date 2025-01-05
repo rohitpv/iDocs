@@ -42,7 +42,6 @@ function Signup() {
       } else {
         window.alert("There was an error signing Up", "danger");
       }
-      console.log(json);
     } catch (error) {
       console.log(error);
     }

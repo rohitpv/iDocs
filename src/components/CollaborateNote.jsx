@@ -15,7 +15,6 @@ function CollaborateNote(id) {
 
   const context = useContext(NoteContext);
   let { currNote, getNote, editNote } = context;
-  console.log("in collaboratenote jsx id=", id);
 
 
   useEffect(() => {
@@ -32,7 +31,6 @@ function CollaborateNote(id) {
 
     // change based on other person's input but will run tracking id -TODO check later
     socket.on("noteChange", (updatedNote) => {
-      console.log("SOCKET IO: noteChange********************", updatedNote);
       if (updatedNote.id === id.id) {
         setNote(updatedNote);
       }
@@ -46,7 +44,6 @@ function CollaborateNote(id) {
   const handleClick = (e) => {
     e.preventDefault();
     editNote(id.id, note.title, note.description, note.tags);
-    console.log("clicked update note", id.id, note.title, note.description, note.tags);
   };
 
   const userInitiated = useRef(false);
@@ -54,8 +51,6 @@ function CollaborateNote(id) {
   const onChange = (e) => {
     userInitiated.current = true;
     setNote({ ...note, [e.target.name]: e.target.value });
-    console.log("in onChange e.target=",e.target.name,e.target.value)
-    console.log("in onChange newww=", { ...id, ...note });
 
   };
   useEffect(() => {
