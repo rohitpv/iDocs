@@ -59,6 +59,7 @@ and high-impact projects in a growth-oriented tech environment..
                 iDocs is a cloud-based documents collaboration app built with the MERN
                 stack (MongoDB, Express, React, Node.js). Users can create,
                 store, and manage their documents effortlessly.
+                Share and collaborate docs in real-time... Anywhere... Anytime
               </div>
             </div>
           </div>
