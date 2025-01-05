@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useContext } from "react";
 import { useState } from "react";
 import NoteContext from "../context/notes/NoteContext";
@@ -56,6 +56,7 @@ function CollaborateNote(id) {
     };
     fetchNote();
 
+    // change based on other person's input but will run tracking id -TODO check later
     socket.on("noteChange", (updatedNote) => {
       console.log("SOCKET IO: noteChange********************", updatedNote);
       if (updatedNote.id === id.id) {
@@ -73,12 +74,22 @@ function CollaborateNote(id) {
     editNote(id.id, note.title, note.description, note.tags);
     console.log("clicked update note", id.id, note.title, note.description, note.tags);
   };
+
+  const userInitiated = useRef(false);
+
   const onChange = (e) => {
+    userInitiated.current = true;
     setNote({ ...note, [e.target.name]: e.target.value });
-    console.log("in onChange id=", id);
+    console.log("in onChange e.target=",e.target.name,e.target.value)
     console.log("in onChange newww=", { ...id, ...note });
-    socket.emit("noteChange", { ...id, ...note });
+
   };
+  useEffect(() => {
+    if (userInitiated.current) {
+      socket.emit("noteChange", { ...id, ...note });
+      userInitiated.current = false;
+    }
+  }, [note]);
   return (
     <>
       <div className="container my-5">
