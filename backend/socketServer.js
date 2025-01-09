@@ -14,7 +14,15 @@ const server = http.createServer(app);
 //     methods: ["GET", "POST"]
 //   }
 // });
-const io = new Server(server)
+// const io = new Server(server)
+const io = require('socket.io')(server, {
+  cors: {
+    origin: ["https://i-docs-swart.vercel.app/", "http://localhost:5173"],
+    methods: ["GET", "POST"],
+    credentials: true
+  },
+  allowEIO3: true
+});
 io.on("connection", (socket) => {
   console.log("a user connected");
 
