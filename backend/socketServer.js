@@ -5,24 +5,23 @@ const { Server } = require("socket.io");
 const cors = require("cors");
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: ["https://i-docs-swart.vercel.app", "http://localhost:5173"],
+  credentials: true
+}));
 
 const server = http.createServer(app);
-// const io = new Server(server, {
-//   cors: {
-//     origin: "http://localhost:5173", // Adjust this to your frontend's URL
-//     methods: ["GET", "POST"]
-//   }
-// });
-// const io = new Server(server)
-const io = require('socket.io')(server, {
+
+const io = new Server(server, {
   cors: {
-    origin: ["https://i-docs-swart.vercel.app/", "http://localhost:5173"],
+    origin: ["https://i-docs-swart.vercel.app", "http://localhost:5173"],
     methods: ["GET", "POST"],
-    credentials: true
+    credentials: true,
+    allowedHeaders: ["my-custom-header"]
   },
-  allowEIO3: true
+  transports: ['websocket', 'polling']
 });
+
 io.on("connection", (socket) => {
   console.log("a user connected");
 
