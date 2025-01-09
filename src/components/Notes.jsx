@@ -6,18 +6,23 @@ import NoteItem from "./NoteItem";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import RichTextInput from "./RichTextInput";
-function Notes() {
+function Notes({ reloadNotes, setReloadNotes }) {
   const context = useContext(NoteContext);
-  let navigate = useNavigate()
+  let navigate = useNavigate();
   let { notes, setNotes, addNote, getAllNotes, editNote } = context;
-  useEffect(() => {
-    if (localStorage.getItem("token")) {
-      getAllNotes();
-    }else{
-      navigate("/");
-    }
 
-  }, [notes]);
+  useEffect(() => {
+    const fetchNotes = async () => {
+      if (localStorage.getItem("token")) {
+        await getAllNotes();
+        setReloadNotes(false);
+      } else {
+        navigate("/");
+      }
+    };
+    fetchNotes();
+  }, [navigate, reloadNotes]);
+
   const [note, setNote] = useState({
     id: "",
     etitle: "",
@@ -42,39 +47,22 @@ function Notes() {
   const handleClick = (e) => {
     e.preventDefault();
     editNote(note.id, note.etitle, note.edescription, note.etags);
+    setReloadNotes(true);
     refClose.current.click();
   };
   return (
     <div className="container">
-      <button
-        type="button"
-        className="btn btn-primary"
-        data-bs-toggle="modal"
-        data-bs-target="#exampleModal"
-        ref={ref}
-        style={{ display: "none" }}
-      >
+      <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" ref={ref} style={{ display: "none" }}>
         Launch demo modal
       </button>
-      <div
-        className="modal fade"
-        id="exampleModal"
-        tabIndex="-1"
-        aria-labelledby="exampleModalLabel"
-        aria-hidden="true"
-      >
+      <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title" id="exampleModalLabel">
                 Edit Note
               </h5>
-              <button
-                type="button"
-                className="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
+              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div className="modal-body">
               {" "}
@@ -102,15 +90,8 @@ function Notes() {
                   <label htmlFor="description" className="form-label">
                     Description
                   </label>
-                  
-                  <RichTextInput
-                    value={note.edescription}
-                    id="edescription"
-                    name="edescription"
-                    onChange={onChange}
-                    minLength={5}
-                    required
-                  />
+
+                  <RichTextInput value={note.edescription} id="edescription" name="edescription" onChange={onChange} minLength={5} required />
                   <div id="emailHelp" className="form-text">
                     Minimum 5 characters
                   </div>
@@ -119,34 +100,15 @@ function Notes() {
                   <label htmlFor="tags" className="form-label">
                     Tags
                   </label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="etags"
-                    name="etags"
-                    value={note.etags}
-                    onChange={onChange}
-                  />
+                  <input type="text" className="form-control" id="etags" name="etags" value={note.etags} onChange={onChange} />
                 </div>
               </form>
             </div>
             <div className="modal-footer">
-              <button
-                type="button"
-                className="btn btn-secondary"
-                data-bs-dismiss="modal"
-                ref={refClose}
-              >
+              <button type="button" className="btn btn-secondary" data-bs-dismiss="modal" ref={refClose}>
                 Close
               </button>
-              <button
-                type="button"
-                className="btn btn-primary"
-                onClick={handleClick}
-                disabled={
-                  note.etitle.length < 5 || note.edescription.length < 5
-                }
-              >
+              <button type="button" className="btn btn-primary" onClick={handleClick} disabled={note.etitle.length < 5 || note.edescription.length < 5}>
                 Update Note
               </button>
             </div>
@@ -155,17 +117,9 @@ function Notes() {
       </div>
       <h1>Your notes</h1>
       <div className="row">
-        <div className="container">
-          {notes.length === 0 && "No notes to display"}
-        </div>
+        <div className="container">{notes.length === 0 && "No notes to display"}</div>
         {notes.map((note) => {
-          return (
-            <NoteItem
-              key={note._id}
-              updateNote={updateNote}
-              note={note}
-            ></NoteItem>
-          );
+          return <NoteItem key={note._id} updateNote={updateNote} note={note}></NoteItem>;
         })}
       </div>
     </div>

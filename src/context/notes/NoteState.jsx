@@ -68,6 +68,8 @@ const NoteState = (props) => {
     const json = await response.json();
     showAlert("Note was added successfully", "success");
     console.log(json);
+    setNotes(notes.concat(json));
+    props.setReloadNotes(true);
   };
   // Delete a note
   const deleteNote = async (id) => {
@@ -87,6 +89,7 @@ const NoteState = (props) => {
     });
 
     setNotes(newNotes);
+    props.setReloadNotes(true);
   };
   // Edit a note
 
@@ -105,6 +108,9 @@ const NoteState = (props) => {
       showAlert("Note was edited successfully", "success");
 
       console.log(json);
+      let newNotes = JSON.parse(JSON.stringify(notes));
+      setNotes(newNotes);
+      props.setReloadNotes(true);
     } catch (error) {
       console.log(error);
     }

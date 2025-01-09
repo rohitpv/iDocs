@@ -6,6 +6,7 @@ import Alert from "./components/Alert";
 import AlertContext from "./context/alert/AlertContext";
 function App() {
   const [alert, setAlert] = useState(null);
+  const [reloadNotes, setReloadNotes] = useState(false);
   const showAlert = (message, type) => {
     setAlert({
       message: message,
@@ -19,7 +20,7 @@ function App() {
   return (
     <>
       <AlertContext.Provider value={{ showAlert }}>
-        <NoteState>
+        <NoteState setReloadNotes={setReloadNotes}>
           <Navbar></Navbar>
           <Alert alert={alert}></Alert>
           <Outlet></Outlet>
