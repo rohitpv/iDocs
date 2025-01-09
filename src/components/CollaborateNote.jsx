@@ -4,7 +4,7 @@ import { useState } from "react";
 import NoteContext from "../context/notes/NoteContext";
 import RichTextInput from "./RichTextInput";
 import { io } from "socket.io-client";
-const socket = io("http://localhost:4000");
+const socket = io("https://idocs.onrender.com");
 
 function CollaborateNote(id) {
   const [note, setNote] = useState({

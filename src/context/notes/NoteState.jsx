@@ -3,7 +3,7 @@ import NoteContext from "./NoteContext";
 import { useContext } from "react";
 import AlertContext from "../alert/AlertContext";
 const NoteState = (props) => {
-  const host = "http://localhost:3000";
+  const host = "https://idocs.onrender.com";
   const notesInitial = [];
   let alert = useContext(AlertContext);
   let { showAlert } = alert;

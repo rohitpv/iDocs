@@ -20,7 +20,7 @@ function Signup() {
     }
     try {
       const response = await fetch(
-        "http://localhost:3000/api/auth/createuser",
+        "https://idocs.onrender.com/api/auth/createuser",
         {
           method: "POST",
           headers: {
