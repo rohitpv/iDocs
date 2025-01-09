@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
-const JWT_SECRET = "qwertyuiopasdfghjklzxcvbnm";
+const JWT_SECRET = process.env.JWT_SECRET;
+
 
 
 // This is a middleware called fetch user which basically takes the JWT token from the 

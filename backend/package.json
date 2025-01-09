@@ -6,12 +6,16 @@
   "type": "commonjs",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "devStart": "nodemon index.js"
+    "devStart": "nodemon index.js",
+    "startSocketServer": "node socketServer.js",
+    "both": "concurrently \"npm run devStart\" \"npm run startSocketServer\""
+
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "concurrently": "^8.2.0",
     "cors": "^2.8.5",
     "express": "^4.21.2",
     "express-validator": "^7.0.1",
