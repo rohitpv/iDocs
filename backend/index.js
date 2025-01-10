@@ -9,12 +9,19 @@ connectToMongo();
 
 // creating the express app on port 3000
 const app = express();
-const port = 3000;
+const server = http.createServer(app);
+const port = process.env.PORT || 3000;
+
+const allowedOrigins = [
+  "https://i-docs-swart.vercel.app",
+  "http://localhost:5173",
+  "https://idocs.onrender.com"
+];
 
 // parses the req body as json if the content-type of the request is set as application/json
 // it's a middle ware that only intercepts if the req content-type is application/json
 app.use(cors({
-  origin: ["https://i-docs-swart.vercel.app", "http://localhost:5173"],
+  origin: allowedOrigins,
   credentials: true
 }));
 
@@ -30,20 +37,17 @@ app.use("/api/auth", require("./routes/auth"));
 app.use("/api/notes", require("./routes/notes"));
 
 // starting the application by making it listen for requests on port 3000
-app.listen(port, () => {
-  console.log(`iDocs backend listening on port ${port}`);
+server.listen(port, () => {
+  console.log(`Server running on port ${port}`);
 });
 
 // ********************socket server related below****************
 
-const server = http.createServer(app);
-
 const io = new Server(server, {
   cors: {
-    origin: ["https://i-docs-swart.vercel.app", "http://localhost:5173"],
+    origin: allowedOrigins,
     methods: ["GET", "POST"],
-    credentials: true,
-    allowedHeaders: ["my-custom-header"]
+    credentials: true
   },
   transports: ['websocket', 'polling'],
   path: '/socket.io/' // Explicitly set the path
@@ -59,9 +63,4 @@ io.on("connection", (socket) => {
   socket.on("noteChange", (note) => {
     io.emit("noteChange", note);
   });
-});
-
-const PORT = 4000;
-server.listen(PORT, () => {
-  console.log(`Socket.IO server running on port ${PORT}`);
 });

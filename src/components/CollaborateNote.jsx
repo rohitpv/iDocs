@@ -19,9 +19,11 @@ function CollaborateNote(id) {
   socket.on('connect_error', (error) => {
     console.log('Connection error:', error);
   });
-  
+  socket.on("connect", () => {
+    console.log("Connected to WebSocket server =connect");
+  });
   socket.on('connection', () => {
-    console.log('socketttttttt connection Connected!');
+    console.log('socketttttttt connection Connected!=connection');
   });
 
   const context = useContext(NoteContext);
@@ -42,6 +44,7 @@ function CollaborateNote(id) {
 
     // change based on other person's input but will run tracking id -TODO check later
     socket.on("noteChange", (updatedNote) => {
+      console.log("Note changed:", note);
       if (updatedNote.id === id.id) {
         setNote(updatedNote);
       }
