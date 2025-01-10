@@ -49,6 +49,7 @@ router.post(
     body("description", "enter a valid description").isLength({ min: 5 }),
   ],
   async (req, res) => {
+    console.log("in notes.js backend ROUTE handler ADD NOTE")
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
@@ -89,7 +90,7 @@ try {
 // ROUTE - 4: update an existing note PUT : /api/notes/updatenote/:noteId . login required
 
 router.put("/updatenote/:noteId",async (req,res)=>{
-  console.log("in notes.js backend ROUTE handler")
+  console.log("in notes.js backend ROUTE handler EDIT NOTE")
 try {
   const noteId = req.params.noteId;
   const oldNote = await Notes.findOne({_id:noteId})
