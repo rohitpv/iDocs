@@ -10,9 +10,9 @@ app.use(cors({
 }));
 
 // Add a basic route handler
-app.get('/', (req, res) => {
-  res.send('Socket.IO server is running');
-});
+// app.get('/', (req, res) => {
+//   res.send('Socket.IO server is running');
+// });
 
 const server = http.createServer(app);
 
@@ -39,7 +39,7 @@ io.on("connection", (socket) => {
   });
 });
 
-const PORT = process.env.PORT || 4000;
+const PORT = 4000;
 server.listen(PORT, () => {
   console.log(`Socket.IO server running on port ${PORT}`);
 });
