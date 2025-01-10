@@ -49,6 +49,13 @@ router.post(
     body("description", "enter a valid description").isLength({ min: 5 }),
   ],
   async (req, res) => {
+    console.log("Request headers:", req.headers);
+    console.log("Raw body:", req.rawBody);
+    
+    if (!req.body || Object.keys(req.body).length === 0) {
+      return res.status(400).json({ error: "Request body is empty or undefined" });
+    }
+
     console.log("in notes.js backend ROUTE handler ADD NOTE",req.body);
     console.log("in notes.js backend ROUTE handler ADD NOTE",req.body,req.body.title,req.body.description,req.body.tag)
     try {
@@ -61,7 +68,7 @@ router.post(
       const savedNote = await note.save();
       res.json(savedNote);
     } catch (error) {
-      console.log(error);
+      console.error("Add note error:", error);
       return res.status(500).json({ error: "internal server error" });
     }
   }
@@ -91,6 +98,13 @@ try {
 // ROUTE - 4: update an existing note PUT : /api/notes/updatenote/:noteId . login required
 
 router.put("/updatenote/:noteId",async (req,res)=>{
+  console.log("Request headers:", req.headers);
+  console.log("Raw body:", req.rawBody);
+  
+  if (!req.body || Object.keys(req.body).length === 0) {
+    return res.status(400).json({ error: "Request body is empty or undefined" });
+  }
+
   console.log("in notes.js backend ROUTE handler EDIT NOTE",req);
   console.log("in notes.js backend ROUTE handler EDIT NOTE",req.params.noteId);
   console.log("in notes.js backend ROUTE handler EDIT NOTE",req.body);
@@ -109,7 +123,7 @@ try {
   await Notes.findByIdAndUpdate(noteId,newNote);
   res.status(200).json({message:"note was updated successfully",newNote});
 } catch (error) {
-  console.log(error);
+  console.error("Update note error:", error);
   return res.status(500).json({message:"internal server error"});
 }
 })

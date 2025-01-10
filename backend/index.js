@@ -25,7 +25,9 @@ app.use(cors({
   credentials: true
 }));
 
-// app.use(express.json());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 // ********************backend serer related below****************
 // the root endpoint that sends a response
 app.get("/", (req, res) => {
