@@ -4,13 +4,24 @@ import { useState } from "react";
 import NoteContext from "../context/notes/NoteContext";
 import RichTextInput from "./RichTextInput";
 import { io } from "socket.io-client";
-const socket = io("https://idocs.onrender.com");
-
+const socket = io('https://idocs.onrender.com', {
+  transports: ['websocket', 'polling'],
+  path: '/socket.io/',
+  withCredentials: true
+});
 function CollaborateNote(id) {
   const [note, setNote] = useState({
     title: "",
     description: "",
     tags: "General",
+  });
+
+  socket.on('connect_error', (error) => {
+    console.log('Connection error:', error);
+  });
+  
+  socket.on('connection', () => {
+    console.log('socketttttttt connection Connected!');
   });
 
   const context = useContext(NoteContext);

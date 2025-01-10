@@ -1,4 +1,3 @@
-// filepath: backend/socketServer.js
 const express = require("express");
 const http = require("http");
 const { Server } = require("socket.io");
@@ -10,6 +9,11 @@ app.use(cors({
   credentials: true
 }));
 
+// Add a basic route handler
+app.get('/', (req, res) => {
+  res.send('Socket.IO server is running');
+});
+
 const server = http.createServer(app);
 
 const io = new Server(server, {
@@ -19,7 +23,8 @@ const io = new Server(server, {
     credentials: true,
     allowedHeaders: ["my-custom-header"]
   },
-  transports: ['websocket', 'polling']
+  transports: ['websocket', 'polling'],
+  path: '/socket.io/' // Explicitly set the path
 });
 
 io.on("connection", (socket) => {
@@ -34,7 +39,7 @@ io.on("connection", (socket) => {
   });
 });
 
-const PORT = 4000;
+const PORT = process.env.PORT || 4000;
 server.listen(PORT, () => {
   console.log(`Socket.IO server running on port ${PORT}`);
 });
