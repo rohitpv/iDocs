@@ -89,6 +89,7 @@ try {
 // ROUTE - 4: update an existing note PUT : /api/notes/updatenote/:noteId . login required
 
 router.put("/updatenote/:noteId",async (req,res)=>{
+  console.log("in notes.js backend ROUTE handler")
 try {
   const noteId = req.params.noteId;
   const oldNote = await Notes.findOne({_id:noteId})
