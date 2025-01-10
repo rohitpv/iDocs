@@ -1,3 +1,5 @@
+/*
+
 const express = require("express");
 const http = require("http");
 const { Server } = require("socket.io");
@@ -43,3 +45,7 @@ const PORT = 4000;
 server.listen(PORT, () => {
   console.log(`Socket.IO server running on port ${PORT}`);
 });
+
+*/
+
+console.log("**running dummy backend/socketServer.js **");
