@@ -91,6 +91,8 @@ try {
 // ROUTE - 4: update an existing note PUT : /api/notes/updatenote/:noteId . login required
 
 router.put("/updatenote/:noteId",async (req,res)=>{
+  console.log("in notes.js backend ROUTE handler EDIT NOTE",req);
+  console.log("in notes.js backend ROUTE handler EDIT NOTE",req.params.noteId);
   console.log("in notes.js backend ROUTE handler EDIT NOTE",req.body);
   console.log("in notes.js backend ROUTE handler EDIT NOTE",req.body,req.body.title,req.body.description,req.body.tag)
 try {
